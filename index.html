@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#3366ff">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <title>Akumen Talent</title>
+  <meta name="description" content="Akumen student competency, rubric and placement tracker">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=28">
+  <script>try{var t=localStorage.getItem('akumen-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+  <script src="config.js?v=28" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" defer></script>
+  <script src="app.js?v=28" defer></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+      <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol>
+      <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+      <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+      <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8M12 11v8"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></symbol>
+      <symbol id="i-comment" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+      <symbol id="i-ms" viewBox="0 0 23 23"><path fill="#f25022" stroke="none" d="M1 1h10v10H1z"/><path fill="#7fba00" stroke="none" d="M12 1h10v10H12z"/><path fill="#00a4ef" stroke="none" d="M1 12h10v10H1z"/><path fill="#ffb900" stroke="none" d="M12 12h10v10H12z"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ Sign in ============ -->
+  <section id="authView" class="auth hid" aria-labelledby="authTitle">
+    <div class="auth-art" aria-hidden="true"><div id="authGrid" class="auth-grid"></div></div>
+    <div class="auth-intro">
+      <div class="auth-brand"><img src="assets/akumen-logo-light.png" alt="Akumen, powered by Qubiqon" class="auth-logo" width="295" height="40"></div>
+      <h2 class="auth-headline">See which students are ready for which role.</h2>
+      <p class="auth-lede">Rubric scores, exams and resumes for the 3-month programme, kept in one place for your training team.</p>
+    </div>
+    <div class="auth-panel">
+      <img src="assets/akumen-mark.png" alt="" class="auth-mark" width="40" height="40">
+      <h1 id="authTitle">Sign in</h1>
+      <p id="authSub" class="auth-sub">Use your Microsoft work account or your Akumen email and password.</p>
+      <button id="msSignInBtn" type="button" class="btn btn-ms"><svg class="ico"><use href="#i-ms"/></svg>Sign in with Microsoft</button>
+      <div class="auth-or" role="separator"><span id="authOrText">or use email</span></div>
+      <form id="loginForm" class="auth-form hid">
+        <div><label class="lab" for="loginEmail">Email</label><input id="loginEmail" type="email" autocomplete="username" required></div>
+        <div><label class="lab" for="loginPassword">Password</label><input id="loginPassword" type="password" autocomplete="current-password" required></div>
+        <label id="rememberRow" class="check"><input id="loginRemember" type="checkbox"> Keep me signed in on this computer</label>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      </form>
+      <form id="setupForm" class="auth-form hid">
+        <div><label class="lab" for="setupName">Your name</label><input id="setupName" autocomplete="name" maxlength="80" required></div>
+        <div><label class="lab" for="setupEmail">Email</label><input id="setupEmail" type="email" autocomplete="username" required></div>
+        <div><label class="lab" for="setupPassword">Password <span class="muted">(at least 8 characters)</span></label><input id="setupPassword" type="password" autocomplete="new-password" minlength="8" required></div>
+        <div><label class="lab" for="setupConfirm">Confirm password</label><input id="setupConfirm" type="password" autocomplete="new-password" minlength="8" required></div>
+        <button id="setupBtn" type="submit" class="btn btn-primary btn-block">Create admin account</button>
+      </form>
+      <p class="auth-switch hid" id="authSwitchRow"><button type="button" id="authSwitch" class="link-btn"></button></p>
+      <p id="authMessage" class="auth-msg" role="status" aria-live="polite"></p>
+      <p id="authNote" class="auth-note">Only people added to the Akumen team can sign in. Ask an admin for access.</p>
+    </div>
+  </section>
+
+  <!-- ============ App shell ============ -->
+  <div id="appView" class="shell">
+    <aside id="sidebar" class="sidebar" aria-label="Main navigation">
+      <a class="side-brand" href="#dashboard" aria-label="Akumen Talent dashboard">
+        <img src="assets/akumen-wordmark.png" alt="Akumen" class="brand-img on-light" width="120" height="22">
+        <img src="assets/akumen-wordmark-light.png" alt="Akumen" class="brand-img on-dark" width="120" height="22">
+        <span class="product-tag">Talent</span>
+      </a>
+      <p class="side-sub">3-month programme</p>
+      <nav class="nav">
+        <a href="#dashboard" data-nav="dashboard"><svg class="ico"><use href="#i-dashboard"/></svg>Dashboard</a>
+        <a href="#students" data-nav="students"><svg class="ico"><use href="#i-users"/></svg>Students</a>
+        <a href="#matrix" data-nav="matrix"><svg class="ico"><use href="#i-grid"/></svg>Rubric matrix</a>
+        <a href="#talent" data-nav="talent"><svg class="ico"><use href="#i-target"/></svg>Talent search</a>
+        <a href="#resumes" data-nav="resumes"><svg class="ico"><use href="#i-file"/></svg>Resumes</a>
+        <a href="#activity" data-nav="activity"><svg class="ico"><use href="#i-history"/></svg>Activity log</a>
+        <a href="#settings" data-nav="settings"><svg class="ico"><use href="#i-settings"/></svg>Settings</a>
+      </nav>
+      <div class="side-foot">
+        <div class="me">
+          <span id="meAvatar" class="avatar" aria-hidden="true">?</span>
+          <div class="me-text"><p id="meName" class="me-name">This browser</p><p id="meEmail" class="me-email">Single-browser mode</p></div>
+          <button id="signOutBtn" type="button" class="icon-btn hid" aria-label="Sign out" title="Sign out"><svg class="ico"><use href="#i-logout"/></svg></button>
+        </div>
+      </div>
+    </aside>
+    <div id="scrim" class="scrim" hidden></div>
+
+    <div class="main">
+      <header class="topbar">
+        <button id="menuBtn" type="button" class="icon-btn menu-btn" aria-label="Open navigation"><svg class="ico"><use href="#i-menu"/></svg></button>
+        <img src="assets/akumen-mark.png" alt="Akumen" class="top-mark" width="28" height="28">
+        <label class="global-search">
+          <svg class="ico"><use href="#i-search"/></svg>
+          <input id="globalSearch" type="search" placeholder="Search students, courses or resume keywords" aria-label="Search students">
+        </label>
+        <div class="top-right">
+          <span id="stat" class="sync" role="status">Saved in this browser</span>
+          <button id="themeBtn" type="button" class="icon-btn" aria-label="Switch light or dark theme" title="Switch theme"><svg class="ico"><use id="themeIcon" href="#i-moon"/></svg></button>
+        </div>
+      </header>
+
+      <main class="content">
+        <p id="importResult" class="banner hid" role="status" aria-live="polite"></p>
+
+        <!-- Dashboard -->
+        <section class="view" data-view="dashboard" aria-labelledby="h-dashboard">
+          <section class="hero" aria-label="Welcome">
+            <div class="hero-text">
+              <p class="hero-eyebrow">Akumen Talent · 3-month programme</p>
+              <h1 id="h-dashboard"><span id="heroGreeting">Welcome back</span></h1>
+              <p class="hero-sub" id="heroSub">Assessment progress and placement readiness across all courses.</p>
+              <div class="hero-actions">
+                <button type="button" class="btn btn-hero" data-open-add><svg class="ico"><use href="#i-plus"/></svg>Add student</button>
+                <a class="btn btn-hero-ghost" href="#matrix"><svg class="ico"><use href="#i-grid"/></svg>Open rubrics</a>
+                <a class="btn btn-hero-ghost" href="#talent"><svg class="ico"><use href="#i-target"/></svg>Find talent</a>
+              </div>
+            </div>
+            <div class="hero-ring" id="heroRing" aria-label="Assessment completion"></div>
+          </section>
+          <section id="metrics" class="kpis" aria-label="Summary"></section>
+          <div class="dash-grid">
+            <section class="panel">
+              <div class="panel-head"><h2>Average rating by criterion</h2><p class="muted">Out of 5, across rated students</p></div>
+              <div id="criteriaLegend" class="grp-legend"></div>
+              <div id="criteriaChart" class="bars"></div>
+            </section>
+            <div class="dash-side">
+              <section class="panel">
+                <div class="panel-head"><h2>Top performers</h2><a class="link" href="#students">All students</a><p class="muted">Ranked by overall score</p></div>
+                <ol id="leaderboard" class="leader"></ol>
+              </section>
+              <section class="panel">
+                <div class="panel-head"><h2>Assessment status</h2></div>
+                <div id="statusSplit"></div>
+              </section>
+              <section class="panel">
+                <div class="panel-head"><h2>By course</h2></div>
+                <div id="courseBreakdown" class="course-cards"></div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- Students -->
+        <section class="view" data-view="students" aria-labelledby="h-students">
+          <div class="page-head">
+            <div><h1 id="h-students">Students</h1><p class="page-sub">Every assessment record, one row per student and course.</p></div>
+            <div class="page-actions">
+              <button id="exportBtn" type="button" class="btn"><svg class="ico"><use href="#i-download"/></svg>Export Excel</button>
+              <button type="button" class="btn btn-primary" data-open-add><svg class="ico"><use href="#i-plus"/></svg>Add student</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <label class="field-search"><svg class="ico"><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="Name, evaluator or resume keyword" aria-label="Search students"></label>
+            <select id="courseFilter" aria-label="Course"><option value="">All courses</option></select>
+            <select id="batchFilter" aria-label="Batch"><option value="">All batches</option></select>
+            <select id="statusFilter" aria-label="Assessment status"><option value="">All statuses</option><option value="assessed">Assessed</option><option value="attention">Needs attention</option><option value="pending">Not assessed</option></select>
+            <select id="rankFilter" aria-label="Top students"><option value="">All students</option><option value="5">Top 5 by overall score</option><option value="10">Top 10 by overall score</option></select>
+            <button id="clearFiltersBtn" type="button" class="btn btn-ghost">Clear</button>
+            <span id="resultCount" class="count" aria-live="polite"></span>
+          </div>
+          <div class="table-card">
+            <table class="data">
+              <thead><tr><th>Student</th><th>Course</th><th>Batch</th><th>Evaluator</th><th class="num">Rubric avg</th><th class="num">Exam avg</th><th class="num">Overall</th><th>Status</th><th class="act"><span class="sr">Actions</span></th></tr></thead>
+              <tbody id="studentRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Rubric matrix -->
+        <section class="view" data-view="matrix" aria-labelledby="h-matrix">
+          <div class="page-head">
+            <div><h1 id="h-matrix">Rubric matrix</h1><p class="page-sub">All 13 criteria, the three exams and trainer comments for each student. Select any score or comment to change it.</p></div>
+            <div class="page-actions"><button id="matrixExportBtn" type="button" class="btn"><svg class="ico"><use href="#i-download"/></svg>Export Excel</button></div>
+          </div>
+          <div class="toolbar">
+            <label class="field-search"><svg class="ico"><use href="#i-search"/></svg><input id="matrixSearch" type="search" placeholder="Filter by student name" aria-label="Filter by student name"></label>
+            <select id="matrixCourse" aria-label="Course"><option value="">All courses</option></select>
+            <select id="matrixBatch" aria-label="Batch"><option value="">All batches</option></select>
+            <select id="matrixRank" aria-label="Top students"><option value="">All students</option><option value="5">Top 5 by overall score</option><option value="10">Top 10 by overall score</option></select>
+            <div class="legend" aria-label="Rating scale"><span class="heat h1">1</span>Beginning<span class="heat h3">3</span>Competent<span class="heat h5">5</span>Advanced</div>
+            <span id="matrixCount" class="count"></span>
+          </div>
+          <div class="table-card matrix-wrap">
+            <table id="matrixTable" class="matrix"></table>
+          </div>
+        </section>
+
+        <!-- Talent search -->
+        <section class="view" data-view="talent" aria-labelledby="h-talent">
+          <div class="page-head">
+            <div><h1 id="h-talent">Talent search</h1><p class="page-sub">Find students whose resume and rubric scores fit a role.</p></div>
+            <div class="page-actions"><button type="button" id="exportShortlistBtn" class="btn"><svg class="ico"><use href="#i-download"/></svg>Export shortlist</button></div>
+          </div>
+          <form id="talentForm" class="panel talent-form">
+            <div class="form-row">
+              <div class="grow"><label class="lab" for="roleInput">Role or keywords</label><input id="roleInput" list="roleList" placeholder="e.g. Full Stack Developer" autocomplete="off"><datalist id="roleList"></datalist></div>
+              <div><label class="lab" for="talentCourse">Course</label><select id="talentCourse"><option value="">All courses</option></select></div>
+              <div><label class="lab" for="talentBatch">Batch</label><select id="talentBatch"><option value="">All batches</option></select></div>
+            </div>
+            <p id="roleHint" class="hint" aria-live="polite"></p>
+            <div><label class="lab" for="skillsInput">Skills to find in the resume</label><textarea id="skillsInput" rows="2" placeholder="Filled in for known roles. Separate skills with commas; use | for alternatives, e.g. React|Angular"></textarea></div>
+            <fieldset class="crit"><legend class="lab">Rubric criteria to check</legend><div id="criteriaChecks" class="crit-grid"></div></fieldset>
+            <div class="form-row">
+              <div><label class="lab" for="minSkill">Minimum skill match</label><select id="minSkill"><option value="30">30% of skills</option><option value="40">40% of skills</option><option value="50" selected>50% of skills</option><option value="60">60% of skills</option><option value="70">70% of skills</option><option value="100">All skills</option></select></div>
+              <div><label class="lab" for="minRating">Minimum rating per criterion</label><select id="minRating"><option value="2">2 · Developing</option><option value="3" selected>3 · Competent</option><option value="4">4 · Proficient</option><option value="5">5 · Advanced</option></select></div>
+              <div><label class="lab" for="fitWeight">Fit score weighting</label><select id="fitWeight"><option value="0.7">70% skills, 30% rubric</option><option value="0.6" selected>60% skills, 40% rubric</option><option value="0.5">50% skills, 50% rubric</option><option value="0.4">40% skills, 60% rubric</option></select></div>
+              <div><label class="lab" for="showMode">Show</label><select id="showMode"><option value="eligible">Eligible only</option><option value="near" selected>Eligible and near matches</option><option value="all">Everyone</option></select></div>
+            </div>
+            <div class="form-actions">
+              <label class="check"><input type="checkbox" id="dedupe" checked> One row per student (best course)</label>
+              <span class="spacer"></span>
+              <button type="button" id="clearTalentBtn" class="btn btn-ghost">Clear</button>
+              <button type="submit" class="btn btn-primary"><svg class="ico"><use href="#i-search"/></svg>Find eligible students</button>
+            </div>
+          </form>
+          <p id="talentSummary" class="summary" aria-live="polite"></p>
+          <div id="talentResults"></div>
+        </section>
+
+        <!-- Resumes -->
+        <section class="view" data-view="resumes" aria-labelledby="h-resumes">
+          <div class="page-head">
+            <div><h1 id="h-resumes">Resumes</h1><p class="page-sub">One resume per student, shared across their courses in a batch. PDF, DOCX or TXT up to 5 MB.</p></div>
+            <div class="page-actions"><button id="bulkResumeBtn" type="button" class="btn btn-primary"><svg class="ico"><use href="#i-upload"/></svg>Upload resumes</button></div>
+          </div>
+          <p class="hint">Bulk uploads are matched by file name: every word of the student's name must appear, for example Anu_Thomas_Resume.pdf. To attach a single resume, open the student and choose Edit.</p>
+          <div class="table-card">
+            <table class="data">
+              <thead><tr><th>Student</th><th>File</th><th class="num">Size</th><th>Uploaded by</th><th>Uploaded</th><th class="num">Words read</th><th class="act"><span class="sr">Actions</span></th></tr></thead>
+              <tbody id="resumeRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Activity -->
+        <section class="view" data-view="activity" aria-labelledby="h-activity">
+          <div class="page-head">
+            <div><h1 id="h-activity">Activity log</h1><p class="page-sub">Who changed what, newest first. Entries cannot be edited or deleted.</p></div>
+            <div class="page-actions"><button id="activityRefreshBtn" type="button" class="btn">Refresh</button><button id="activityExportBtn" type="button" class="btn"><svg class="ico"><use href="#i-download"/></svg>Export Excel</button></div>
+          </div>
+          <div class="toolbar">
+            <label class="field-search"><svg class="ico"><use href="#i-search"/></svg><input id="actSearch" type="search" placeholder="Search details" aria-label="Search activity details"></label>
+            <select id="actUser" aria-label="User"><option value="">All users</option></select>
+            <select id="actAction" aria-label="Action"><option value="">All actions</option></select>
+            <label class="date-field">From <input id="actFrom" type="date"></label>
+            <label class="date-field">To <input id="actTo" type="date"></label>
+            <span id="actCount" class="count"></span>
+          </div>
+          <div class="table-card">
+            <table class="data">
+              <thead><tr><th>When</th><th>User</th><th>Action</th><th>Details</th></tr></thead>
+              <tbody id="activityRows"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="view" data-view="settings" aria-labelledby="h-settings">
+          <div class="page-head">
+            <div><h1 id="h-settings">Settings</h1><p class="page-sub">Team access, imports and backups.</p></div>
+          </div>
+          <div class="settings-grid">
+            <section class="panel" id="teamPanel">
+              <div class="panel-head"><h2>Team</h2><p id="teamNote" class="muted"></p></div>
+              <form id="teamForm" class="team-form hid">
+                <input id="teamName" class="local-only hid" placeholder="Full name" aria-label="Team member name" maxlength="80">
+                <input id="teamEmail" type="email" placeholder="name@company.com" aria-label="Team member email" required>
+                <input id="teamPassword" class="local-only hid" type="text" placeholder="Temporary password (8+ characters)" aria-label="Temporary password" minlength="8" autocomplete="off">
+                <select id="teamRole" aria-label="Role"><option value="trainer">Trainer</option><option value="admin">Admin</option></select>
+                <button type="submit" class="btn btn-primary"><svg class="ico"><use href="#i-plus"/></svg>Add member</button>
+              </form>
+              <div id="teamList"></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><h2>Import from Excel</h2><p class="muted">Worksheets named AI, Data or DevOps, or one sheet with a Course column. Matching student, course and batch rows are updated; new rows are added.</p></div>
+              <div class="btn-row">
+                <button id="uploadExcelBtn" type="button" class="btn btn-primary" data-admin><svg class="ico"><use href="#i-sheet"/></svg>Upload Excel</button>
+                <button id="templateBtn" type="button" class="btn"><svg class="ico"><use href="#i-download"/></svg>Download template</button>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><h2>Backup</h2><p class="muted">One file with every record and resume. Restoring replaces the current data for everyone.</p></div>
+              <div class="btn-row">
+                <button id="backupBtn" type="button" class="btn"><svg class="ico"><use href="#i-download"/></svg>Download backup</button>
+                <button id="importBtn" type="button" class="btn btn-danger-ghost" data-admin><svg class="ico"><use href="#i-upload"/></svg>Restore backup</button>
+              </div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><h2>Duplicates</h2><p class="muted">Students are matched by name, course and batch. Batch spellings such as "Batch 2", "batch-02" and "Batch 02" are treated as one batch and saved as "Batch 02". Duplicates are merged automatically when you upload Excel, and you can run the check yourself here.</p></div>
+              <div class="btn-row"><button id="dedupeBtn" type="button" class="btn" data-admin><svg class="ico"><use href="#i-users"/></svg>Find and merge duplicates</button></div>
+            </section>
+            <section class="panel danger-panel" data-admin>
+              <div class="panel-head"><h2>Clear data</h2><p class="muted">Admins only. Removes every student record, rating, exam score and comment for the whole team. The activity log is kept. Download a backup first if you may need the data again.</p></div>
+              <div class="btn-row"><button id="clearDataBtn" type="button" class="btn btn-danger"><svg class="ico"><use href="#i-trash"/></svg>Clear all data</button></div>
+            </section>
+            <section class="panel">
+              <div class="panel-head"><h2>Storage</h2></div>
+              <p id="modeNote" class="muted"></p>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <input id="excelInput" type="file" accept=".xlsx,.xls,.xlsm,.csv" class="hid">
+  <input id="backupInput" type="file" accept=".json,application/json" class="hid">
+  <input id="bulkResumeInput" type="file" accept=".pdf,.docx,.txt" multiple class="hid">
+
+  <!-- Student detail sheet -->
+  <dialog id="sheet" class="sheet" aria-labelledby="sheetName">
+    <div class="sheet-head">
+      <div class="sheet-id"><span id="sheetAvatar" class="avatar lg" aria-hidden="true"></span><div><h2 id="sheetName"></h2><p id="sheetMeta" class="muted"></p></div></div>
+      <button id="closeSheetBtn" type="button" class="icon-btn" aria-label="Close"><svg class="ico"><use href="#i-x"/></svg></button>
+    </div>
+    <div id="sheetBody" class="sheet-body"></div>
+    <div class="sheet-foot">
+      <button id="sheetDeleteBtn" type="button" class="btn btn-danger-ghost" data-admin><svg class="ico"><use href="#i-trash"/></svg>Delete</button>
+      <span class="spacer"></span>
+      <button id="sheetEditBtn" type="button" class="btn btn-primary"><svg class="ico"><use href="#i-edit"/></svg>Edit student</button>
+    </div>
+  </dialog>
+
+  <!-- Clear data (admin) -->
+  <dialog id="clearDialog" class="modal modal-sm" aria-labelledby="clearTitle">
+    <form id="clearForm">
+      <div class="modal-head">
+        <div><h2 id="clearTitle">Clear all data?</h2><p class="muted">This removes <strong id="clearCount"></strong> for everyone on the team. It cannot be undone.</p></div>
+        <button type="button" class="icon-btn" data-close-clear aria-label="Close"><svg class="ico"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <label class="check" style="margin:8px 0 16px"><input type="checkbox" id="clearResumes"> Also delete all uploaded resumes</label>
+        <label class="lab" for="clearConfirm">Type CLEAR to confirm</label>
+        <input id="clearConfirm" autocomplete="off" spellcheck="false" placeholder="CLEAR">
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn" data-close-clear>Cancel</button>
+        <button type="submit" class="btn btn-danger" id="clearGo" disabled>Clear all data</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Comment editor (rubric matrix) -->
+  <dialog id="commentDialog" class="modal modal-sm" aria-labelledby="commentTitle">
+    <form id="commentForm" method="dialog">
+      <div class="modal-head">
+        <div><h2 id="commentTitle">Comments</h2><p class="muted" id="commentWho"></p></div>
+        <button type="button" class="icon-btn" data-close-comment aria-label="Close"><svg class="ico"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <label class="lab" for="commentText">Trainer comments</label>
+        <textarea id="commentText" rows="7" maxlength="2000" placeholder="Strengths, areas to improve, placement notes"></textarea>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn" data-close-comment>Cancel</button>
+        <button type="submit" class="btn btn-primary" id="commentSave">Save comments</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Add / edit student -->
+  <dialog id="studentDialog" class="modal" aria-labelledby="dialogTitle">
+    <form id="studentForm">
+      <div class="modal-head">
+        <div><h2 id="dialogTitle">Add student</h2><p class="muted">Details, exam scores and the 13 rubric ratings.</p></div>
+        <button id="closeDialogBtn" class="icon-btn" type="button" aria-label="Close"><svg class="ico"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <input id="studentId" type="hidden">
+        <h3 class="sect">Details</h3>
+        <div class="form-grid">
+          <div class="span-2"><label class="lab" for="studentName">Student name</label><input id="studentName" required maxlength="100" autocomplete="off"></div>
+          <div><label class="lab" for="studentCourse">Course</label><input id="studentCourse" maxlength="100" list="courseList" placeholder="AI, Data or DevOps"><datalist id="courseList"><option value="AI"></option><option value="Data"></option><option value="DevOps"></option></datalist></div>
+          <div><label class="lab" for="studentBatch">Batch</label><input id="studentBatch" maxlength="100" list="batchList" placeholder="e.g. Batch 05" autocomplete="off"><datalist id="batchList"></datalist></div>
+          <div><label class="lab" for="studentEvaluator">Evaluator</label><input id="studentEvaluator" maxlength="100"></div>
+        </div>
+        <h3 class="sect">Exams <span class="muted">0 to 100</span></h3>
+        <div class="form-grid cols-3">
+          <div><label class="lab" for="studentExam1">Exam 1</label><input id="studentExam1" type="number" min="0" max="100" step="any"></div>
+          <div><label class="lab" for="studentExam2">Exam 2</label><input id="studentExam2" type="number" min="0" max="100" step="any"></div>
+          <div><label class="lab" for="studentExam3">Exam 3</label><input id="studentExam3" type="number" min="0" max="100" step="any"></div>
+        </div>
+        <h3 class="sect">Rubric <span class="muted">1 Beginning to 5 Advanced</span></h3>
+        <div id="rubricFields"></div>
+        <h3 class="sect">Resume <span class="muted">PDF, DOCX or TXT up to 5 MB</span></h3>
+        <div id="resumeCurrent" class="resbox"></div>
+        <input id="resumeInput" type="file" accept=".pdf,.docx,.txt" aria-label="Upload resume" class="file-input">
+        <p id="resumeStatus" class="hint" aria-live="polite"></p>
+        <h3 class="sect">Comments</h3>
+        <textarea id="studentNotes" rows="4" maxlength="4000" placeholder="Feedback and observations" aria-label="Comments"></textarea>
+        <p id="formError" class="err" role="alert"></p>
+      </div>
+      <div class="modal-foot"><button id="cancelDialogBtn" type="button" class="btn btn-ghost">Cancel</button><button id="saveStudentBtn" type="submit" class="btn btn-primary">Save student</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js" onerror="this.onerror=null;this.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js'"></script>
+</body>
+</html>
